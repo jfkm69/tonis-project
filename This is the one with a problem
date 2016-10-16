@@ -22,6 +22,191 @@
 			function addToCart(id){
 				document.getElementById("orders").innerHTML += "1 soda @ KES 30";
 			}
+			function addItem(){
+			//Check for null fields
+			if (document.getElementById('itemName').value != "" && document.getElementById('itemPrice').value != "" && document.getElementById('units').value != ""){
+				//Get the value of the rows
+				var name = document.getElementById('itemName').value;
+				var price = document.getElementById('itemPrice').value;
+				var units = document.getElementById('units').value;
+				var type = document.getElementById('type').value;
+
+				addRow(name, price, units, type);
+
+			    clear();
+			} else {
+				alert("please fill everything.");
+			}
+		}
+
+		function addRow(name, price, units, type){
+				var rows = "";
+
+				rows += '<td class="col-lg-3">'+name+'</td><td class="col-lg-3">'+price+'</td><td class="col-lg-3">'+units+'</td><td class="col-lg-3">'+type+'</td><td class="col-lg-1"><img src="images/edit.png" width="15px" height="15px" onclick="getRowInfo()"></td><td class="col-lg-1"><img src="images/bin.png" width="20px" height="20px" onclick="deleteRow()"></td>';
+				var tbody = document.querySelector("#list tbody");
+			    var tr = document.createElement("tr");
+			    var thead = document.querySelector("#list thead");
+
+			    tr.innerHTML = rows;
+			    tbody.appendChild(tr);
+		}
+
+		function getRowId(){
+			var rows = document.getElementById('list').getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+		    for (i = 0; i < rows.length; i++) {
+		        rows[i].onclick = function() {
+		            return this.rowIndex;
+		        }
+		    }
+		}
+
+		function deleteRow(){
+			var rows = document.getElementById('list').getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+		    for (i = 0; i < rows.length; i++) {
+		        rows[i].onclick = function() {
+					document.getElementById("list").deleteRow(this.rowIndex);
+		        }
+		    }
+		}
+
+		function getRowInfo() {
+			var rows = document.getElementById('list').getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+		    for (i = 0; i < rows.length; i++) {
+		        rows[i].onclick = function() {
+		            document.getElementById('item').style.display = "block";
+		            $('#itemName').val($('#list tr').eq(this.rowIndex).find('td').eq(0).text());
+		            $('#itemPrice').val($('#list tr').eq(this.rowIndex).find('td').eq(1).text());
+		            $('#units').val($('#list tr').eq(this.rowIndex).find('td').eq(2).text());
+		            $('#type').val($('#list tr').eq(this.rowIndex).find('td').eq(3).text());
+		            cItem = this.rowIndex;
+		        }
+		    }
+		    document.getElementById('editProdItem').style.display = "block";
+		    document.getElementById('addProdItem').style.display = "none";
+		}
+
+		function editItem(){
+				var name = document.getElementById('itemName').value;
+				var price = document.getElementById('itemPrice').value;
+				var units = document.getElementById('units').value;
+				var type = document.getElementById('type').value;
+
+				console.log(cItem);
+
+				$('#list tr').eq(cItem).find('td').eq(0).text(name);
+		        $('#list tr').eq(cItem).find('td').eq(1).text(price);
+		        $('#list tr').eq(cItem).find('td').eq(2).text(units);
+		        $('#list tr').eq(cItem).find('td').eq(3).text(type);
+
+		        clear();
+
+		        document.getElementById('editProdItem').style.display = "none";
+			    document.getElementById('addProdItem').style.display = "block";
+		}
+
+		function clear(){
+			document.getElementById('itemName').value = "";
+			document.getElementById('itemPrice').value = "";
+			document.getElementById('units').value = "";
+		}
+
+		function rotateMe(e) {
+			var rotate_angle = (180 + rotate_angle) % 360;
+			$(e).rotate(rotate_angle);
+		}
+	</script>
+	<script>
+		//The ID of the beacon asssociated with the ad
+		var beacon_id;
+		var title;
+		var upFile;
+
+		function readTblValues()
+		{
+		var TableData = '';
+		$('#tableResult').val('');  // clear textbox
+		$('#list tr').each(function(row, tr){
+		  TableData = TableData 
+		      + $(tr).find('td:eq(0)').text() + ' '  // Name
+		      + $(tr).find('td:eq(1)').text() + ' '  // Price
+		      + $(tr).find('td:eq(2)').text() + ' '  // Units
+		      + $(tr).find('td:eq(3)').text() + ' '  // Type
+		      + '\n';
+		});
+		$('#tableResult').val(TableData); //Put the result in the textarea
+		}
+
+		function storeTblValues()
+		{
+		var TableData = new Array();
+
+		$('#list tr').each(function(row, tr){
+		  TableData[row]={
+		  	"beaconID": beacon_id
+		      ,"itemName" : $(tr).find('td:eq(0)').text()
+		      , "itemPrice" :$(tr).find('td:eq(1)').text()
+		      , "units" : $(tr).find('td:eq(2)').text()
+		      , "type" : $(tr).find('td:eq(3)').text()
+		  }
+		}); 
+		TableData.shift();  // first row will be empty - so remove
+		return TableData;
+		}
+
+		function convertArrayToJSON() {
+		var TableData;
+		TableData = $.toJSON(storeTblValues());
+		$('#tableResult').val('JSON array: \n\n' + TableData.replace(/},/g, "},\n"));
+		return TableData;
+		}
+
+		function getBeaconID(){
+			var beaconName = document.getElementById('beaconName').value;
+
+			$.ajax({
+				type: "POST",
+				url: "getBeaconID.php",
+				data: "beaconName="+beaconName,
+
+				success: function(beaconID){
+					beacon_id = beaconID;
+					if (beaconID > 0) {
+						document.getElementById('error_get_beacon_id').style.display = "none";
+						document.getElementById('tickBeaconAd').style.display = "block";
+						document.getElementById('adInfo').style.display="block";
+						$('#tableResult').val('Server Response:\\\\\\\\n\\\\\\\\n' + beaconID);
+					} else {
+						document.getElementById('error_get_beacon_id').style.display = "block";
+						document.getElementById('tickBeaconAd').style.display = "none";
+						if (beaconID == 0)
+						document.getElementById('error_get_beacon_id').innerHTML = "No beacons associated with name!";
+						if (beaconID == -1)
+						document.getElementById('error_get_beacon_id').innerHTML = "Beacon already associated with ad";
+						$('#tableResult').val('Server Response:\\\\\\\\n\\\\\\\\n' + beaconID);
+					}
+
+				}
+			})
+		}
+
+		function sendTblDataToServer()
+		{
+		var TableData;
+		TableData = $.toJSON(storeTblValues());
+		$('#tableResult').val('JSON array to send to server: \n\n' + TableData.replace(/},/g, "},\n"));
+
+		$.ajax({
+		type: "POST",
+		url: "setProductWeb.php",
+		data: {pTableData:TableData},
+
+		success: function(msg){
+		  // return value stored in msg variable 
+		  $('#tableResult').val('Server Response:\\\\\\\\n\\\\\\\\n' + msg);
+		}
+		});
+		}
+
 		</script>
 
 	</head>
@@ -130,4 +315,4 @@
 		</div>
 
 	</body>
-</html>1
+</html>
