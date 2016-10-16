@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+		<meta name="author" content="">
+
+		<title>Toni's Cakes and Pastries</title>
+
+		<!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
+		<!-- <link href="css/custom.css" rel="stylesheet"> -->
+		<!-- <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+
+		<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+		<link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Rancho" rel="stylesheet">
+
+		<script type="text/javascript">
+			function addToCart(id){
+				document.getElementById("orders").innerHTML += "1 soda @ KES 30";
+			}
+		</script>
+
+	</head>
+	<body>
+		<!-- Navigation bar -->
+		<nav class="navbar" style="padding-bottom: 0px !important; background-color: #009900;">
+			<div class="container-fluid">
+				<div class="navbar-header">
+	  				<a class="navbar-brand" href="index.html" style="color: #fff;">Toni's</a>
+				</div>
+				<!-- <ul class="nav navbar-nav navbar-right">
+	  				<li><a href="#"><span class="glyphicon glyphicon-user" style="color: #fff;"></span> Sign Up</a></li>
+	  				<li><a href="#"><span class="glyphicon glyphicon-log-in" style="color: #fff;"></span> Login</a></li>
+				</ul> -->
+  			</div>
+		</nav>
+
+		<!-- Header -->
+		<div class="header" style="height: 400px !important; background-image: url('img/DeathtoStock_Wired4.jpg') !important;">
+			<div class="header-form text-vertical-center">
+				<h1> Toni's </h1>
+			</div>
+		</div>
+
+		<div class="container-fluid" style="padding-top: 15px; position: relative;">
+			<div class="row col-lg-8 col-lg-offset-2" align="center">
+				<!-- Mini Navigation or search -->
+				<div class="col-lg-2 col-sm-2" style="height: auto; width: 300px;">
+					<ul style="display: block; list-style: none;">
+						<li> <h2 align="left">Menu</h2> </li>
+						<hr>
+						<li style="padding: 20px 20px;">
+							Fast Food
+							<i class="fa fa-chevron-right" align="right" style="float: left;"> </i>
+						</li>
+						<li style="padding: 20px 20px;">
+							Drinks and Snacks
+							<i class="fa fa-chevron-right" style="float: left;"> </i>
+						</li>
+						<li style="padding: 20px 20px;">
+							Special Orders
+							<i class="fa fa-chevron-right" style="float: left;"> </i>
+						</li>
+					</ul>
+				</div>
+				<!-- displaying of items -->
+				<div class="col-lg-4 col-sm-4" style="height: auto; width: 600px;">
+					<div style="display: block;">
+						<h2 align="left">Drinks and Snacks</h2>
+						<hr>
+						<ul style="display: block; list-style: none;">
+							<li style="display: inline-block; margin-left: 0;">
+								<p class="item-name" style="display: inline-block; float: left; padding: 15px 15px;">
+									Fanta Soda
+								</p>
+								<p class="item-cost" style="display: inline-block; float: right; padding: 15px 15px;">
+									KES 30.00
+									<a onclick="addToCart()" id="soda"><i class="fa fa-plus-square" style="padding-left: 20px; padding-right: 20px;" aria-hidden="true"></i>add</a>
+								</p>
+								<div class="item-picture" style="display: inline-block; float: left; padding: 15px 15px;">
+									<img src="img/photo-1463183665146-ce2ed31df6b0.jpg" class="img-responsive" style="max-width: 130px !important; height: 120px !important;">
+								</div>
+							</li>
+
+							<li style="display: inline-block; margin-left: 0;">
+								<p class="item-name" style="display: inline-block; float: left; padding: 15px 15px;">
+									Fanta Soda
+								</p>
+								<p class="item-cost" style="display: inline-block; float: right; padding: 15px 15px;">
+									KES 30.00
+									<a onclick="addToCart()" id="water"><i class="fa fa-plus-square" style="padding-left: 20px; padding-right: 20px;" aria-hidden="true"></i>add</a>
+								</p>
+								<div class="item-picture" style="display: inline-block; float: left; padding: 15px 15px;">
+									<img src="img/photo-1463183665146-ce2ed31df6b0.jpg" class="img-responsive" style="max-width: 130px !important; height: 120px !important;">
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<!-- Cart -->
+				<div class="col-lg-2 col-sm-2" style="/*position: fixed;*/ height: auto; width: 300px;">
+					<h2 align="left">Your Order</h2>
+					<hr>
+					<div id="orders" class="bg-success">
+						<table>
+							<tr>
+								<td>1</td>
+								<td width="100px;"></td>
+								<td>Fanta Orange</td>
+
+							</tr>
+						</table>
+					</div>
+					<div style="width: 100%; height: 30px;"></div>
+					<table>
+						<tr>
+							<td align="left" style="float: left;"> Total </td>
+							<td width="100px;"></td>
+							<td align="right" style="float: right;"> KES 100 </td>
+						</tr>
+					</table>
+					<button class="btn btn-success btn-light" style="text-align: center; background-color: #009900; color: #fff; height: 40px; width: 80%;"> ORDER NOW </button>
+				</div>
+			</div>
+		</div>
+
+	</body>
+</html>1
